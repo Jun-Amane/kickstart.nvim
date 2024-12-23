@@ -831,8 +831,6 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    'rebelot/kanagawa.nvim',
     'catppuccin/nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
@@ -943,7 +941,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'java', 'cpp' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -969,6 +967,69 @@ require('lazy').setup({
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
+  },
+  -- {
+  --   'tpope/vim-markdown',
+  --   config = function()
+  --     -- tpope/vim-markdown
+  --     vim.g.markdown_syntax_conceal = 0
+  --     vim.g.markdown_fenced_languages = {
+  --       'html',
+  --       'python',
+  --       'bash=sh',
+  --       'json',
+  --       'java',
+  --       'js=javascript',
+  --       'sql',
+  --       'yaml',
+  --       'xml',
+  --       'Dockerfile',
+  --       'Rust',
+  --       'typescript',
+  --       'swift',
+  --       'javascript',
+  --       'lua',
+  --     }
+  --   end,
+  -- },
+  --
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && yarn install',
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+      vim.g.mkdp_theme = 'light'
+    end,
+    ft = { 'markdown' },
+  },
+
+  {
+    'bullets-vim/bullets.vim',
+    config = function()
+      vim.g.bullets_enabled_file_types = { 'markdown', 'text', 'gitcommit', 'scratch' }
+    end,
+  },
+  {
+    'tenxsoydev/vim-markdown-checkswitch',
+    config = function()
+      vim.g.md_checkswitch_style = 'cycle'
+    end,
+  },
+  {
+    'dhruvasagar/vim-table-mode',
+    config = function()
+      vim.cmd(
+        [[
+        augroup markdown_config
+          autocmd!
+          autocmd FileType markdown nnoremap <buffer> <M-s> :TableModeRealign<CR>
+        augroup END
+      ]],
+        false
+      )
+      vim.g.table_mode_sort_map = '<leader>mts'
+    end,
   },
   --
   -- End My Plugins
