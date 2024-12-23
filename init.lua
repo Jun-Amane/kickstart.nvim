@@ -736,7 +736,32 @@ require('lazy').setup({
           --     require('luasnip.loaders.from_vscode').lazy_load()
           --   end,
           -- },
+          'rafamadriz/friendly-snippets',
+          'benfowler/telescope-luasnip.nvim',
         },
+        config = function(_, opts)
+          if opts then
+            require('luasnip').config.setup(opts)
+          end
+          vim.tbl_map(function(type)
+            require('luasnip.loaders.from_' .. type).lazy_load()
+          end, { 'vscode', 'snipmate', 'lua' })
+          -- friendly-snippets - enable standardized comments snippets
+          require('luasnip').filetype_extend('typescript', { 'tsdoc' })
+          require('luasnip').filetype_extend('javascript', { 'jsdoc' })
+          require('luasnip').filetype_extend('lua', { 'luadoc' })
+          require('luasnip').filetype_extend('python', { 'pydoc' })
+          require('luasnip').filetype_extend('rust', { 'rustdoc' })
+          require('luasnip').filetype_extend('cs', { 'csharpdoc' })
+          require('luasnip').filetype_extend('java', { 'javadoc' })
+          require('luasnip').filetype_extend('c', { 'cdoc' })
+          require('luasnip').filetype_extend('cpp', { 'cppdoc' })
+          require('luasnip').filetype_extend('php', { 'phpdoc' })
+          require('luasnip').filetype_extend('kotlin', { 'kdoc' })
+          require('luasnip').filetype_extend('ruby', { 'rdoc' })
+          require('luasnip').filetype_extend('sh', { 'shelldoc' })
+          -- require('luasnip').filetype_extend('md', { 'markdowndoc' })
+        end,
       },
       'saadparwaiz1/cmp_luasnip',
 
@@ -968,31 +993,7 @@ require('lazy').setup({
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
   },
-  -- {
-  --   'tpope/vim-markdown',
-  --   config = function()
-  --     -- tpope/vim-markdown
-  --     vim.g.markdown_syntax_conceal = 0
-  --     vim.g.markdown_fenced_languages = {
-  --       'html',
-  --       'python',
-  --       'bash=sh',
-  --       'json',
-  --       'java',
-  --       'js=javascript',
-  --       'sql',
-  --       'yaml',
-  --       'xml',
-  --       'Dockerfile',
-  --       'Rust',
-  --       'typescript',
-  --       'swift',
-  --       'javascript',
-  --       'lua',
-  --     }
-  --   end,
-  -- },
-  --
+  -- for markdown
   {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
@@ -1031,7 +1032,8 @@ require('lazy').setup({
       vim.g.table_mode_sort_map = '<leader>mts'
     end,
   },
-  --
+  -- for snippet
+  -- { 'rafamadriz/friendly-snippets' },
   -- End My Plugins
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
